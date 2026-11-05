@@ -1,5 +1,6 @@
 package ru.praktikum.client;
 
+import io.qameta.allure.Step;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.HttpClientConfig;
 import io.restassured.config.RestAssuredConfig;
@@ -9,7 +10,6 @@ import io.restassured.specification.RequestSpecification;
 
 import java.util.Map;
 
-import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 
 public class StellarApi {
@@ -22,19 +22,19 @@ public class StellarApi {
                     .setParam("http.socket.timeout", 30000)))
             .build();
 
+    @Step("Создать пользователя")
     public Response register(Map<String, String> user) {
-        return step("Создать пользователя", () ->
-                given().spec(specification).body(user).post("/auth/register"));
+        return given().spec(specification).body(user).post("/auth/register");
     }
 
+    @Step("Выполнить вход")
     public Response login(Map<String, String> credentials) {
-        return step("Выполнить вход", () ->
-                given().spec(specification).body(credentials).post("/auth/login"));
+        return given().spec(specification).body(credentials).post("/auth/login");
     }
 
+    @Step("Удалить тестового пользователя")
     public Response deleteUser(String accessToken) {
-        return step("Удалить тестового пользователя", () ->
-                given().spec(specification).header("Authorization", accessToken).delete("/auth/user"));
+        return given().spec(specification).header("Authorization", accessToken).delete("/auth/user");
     }
 
 }

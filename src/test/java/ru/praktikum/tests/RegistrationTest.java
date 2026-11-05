@@ -7,6 +7,7 @@ import ru.praktikum.pages.RegistrationPage;
 import ru.praktikum.support.UiTestBase;
 import ru.praktikum.support.TestUser;
 
+import static org.apache.http.HttpStatus.*;
 import static io.qameta.allure.Allure.step;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertTrue;
@@ -26,7 +27,7 @@ public class RegistrationTest extends UiTestBase {
                 registration.register(user.name(), user.email(), user.password()));
         assertTrue("После регистрации должна открыться форма входа",
                 registration.waitForSuccessfulRegistration().isOpen());
-        api.login(user.credentials()).then().statusCode(200)
+        api.login(user.credentials()).then().statusCode(SC_OK)
                 .body("success", equalTo(true)).body("user.email", equalTo(user.email()));
     }
 

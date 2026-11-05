@@ -10,4 +10,4 @@ export MAVEN_OPTS
 if [ -f "$HOME/.cache/diplom-drivers/chromedriver" ]; then
     set -- "-Dchrome.driver=$HOME/.cache/diplom-drivers/chromedriver" "$@"
 fi
-exec mvn -B -ntp clean test allure:report -DargLine=-Xmx384m "$@"
+exec mvn -B -ntp clean test allure:report "$@"

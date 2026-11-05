@@ -1,5 +1,6 @@
 package ru.praktikum.pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -14,6 +15,7 @@ public class MainPage extends BasePage {
         super(driver);
     }
 
+    @Step("Открыть конструктор")
     public MainPage open() {
         driver.get(BASE_URL + "/");
         visible(constructorHeading);
@@ -21,21 +23,25 @@ public class MainPage extends BasePage {
         return this;
     }
 
+    @Step("Открыть вход по кнопке на главной")
     public LoginPage openLoginByMainButton() {
         click(loginButton);
         return new LoginPage(driver).waitUntilLoaded();
     }
 
+    @Step("Открыть вход через личный кабинет")
     public LoginPage openLoginByPersonalAccount() {
         click(personalAccountLink);
         return new LoginPage(driver).waitUntilLoaded();
     }
 
+    @Step("Проверить доступность оформления заказа")
     public boolean isLoggedIn() {
         visible(placeOrderButton);
         return driver.findElement(placeOrderButton).isDisplayed();
     }
 
+    @Step("Перейти к разделу {section}")
     public MainPage selectSection(String section) {
         click(sectionTab(section));
         // Smooth scrolling can briefly activate a tab before scrolling settles.
@@ -54,6 +60,7 @@ public class MainPage extends BasePage {
         return this;
     }
 
+    @Step("Проверить активность раздела {section}")
     public boolean isSectionSelected(String section) {
         return driver.findElement(sectionTab(section)).getAttribute("class")
                 .contains("tab_tab_type_current");

@@ -1,5 +1,6 @@
 package ru.praktikum.tests;
 
+import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +18,7 @@ public class LoginTest extends UiTestBase {
 
     @Before
     public void createUserViaApi() {
+        // UiTestBase.@After deletes this user and checks that login returns 401.
         user.create();
     }
 
@@ -46,6 +48,7 @@ public class LoginTest extends UiTestBase {
                 .openPasswordRecovery().openLogin());
     }
 
+    @Step("Проверить успешный вход")
     private void assertSuccessfulLogin(LoginPage loginPage) {
         MainPage main = step("Войти под созданным через API пользователем", () ->
                 loginPage.login(user.email(), user.password()));

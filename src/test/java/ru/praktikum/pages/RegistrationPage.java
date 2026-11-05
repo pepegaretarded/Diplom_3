@@ -1,5 +1,6 @@
 package ru.praktikum.pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -16,11 +17,13 @@ public class RegistrationPage extends BasePage {
         super(driver);
     }
 
+    @Step("Дождаться формы регистрации")
     public RegistrationPage waitUntilLoaded() {
         visible(heading);
         return this;
     }
 
+    @Step("Заполнить и отправить форму регистрации")
     public void register(String name, String email, String password) {
         fill(nameInput, name);
         fill(emailInput, email);
@@ -28,16 +31,19 @@ public class RegistrationPage extends BasePage {
         click(registerButton);
     }
 
+    @Step("Проверить ошибку короткого пароля")
     public boolean hasPasswordError() {
         visible(passwordError);
         return driver.findElement(passwordError).isDisplayed();
     }
 
+    @Step("Перейти ко входу из регистрации")
     public LoginPage openLogin() {
         click(loginLink);
         return new LoginPage(driver).waitUntilLoaded();
     }
 
+    @Step("Дождаться входа после регистрации")
     public LoginPage waitForSuccessfulRegistration() {
         return new LoginPage(driver).waitUntilLoaded();
     }

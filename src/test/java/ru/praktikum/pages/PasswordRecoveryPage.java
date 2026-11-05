@@ -1,5 +1,6 @@
 package ru.praktikum.pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -11,11 +12,13 @@ public class PasswordRecoveryPage extends BasePage {
         super(driver);
     }
 
+    @Step("Дождаться восстановления пароля")
     public PasswordRecoveryPage waitUntilLoaded() {
         visible(heading);
         return this;
     }
 
+    @Step("Перейти ко входу из восстановления пароля")
     public LoginPage openLogin() {
         click(loginLink);
         return new LoginPage(driver).waitUntilLoaded();
