@@ -1,0 +1,13 @@
+#!/bin/sh
+set -eu
+cd "$(dirname "$0")"
+if [ "$(uname -s)" = "Darwin" ]; then
+    JAVA_HOME=$(/usr/libexec/java_home -v 11 -a arm64 2>/dev/null || /usr/libexec/java_home -v 11)
+    export JAVA_HOME
+fi
+MAVEN_OPTS=${MAVEN_OPTS:--Xmx256m}
+export MAVEN_OPTS
+if [ -f "$HOME/.cache/diplom-drivers/chromedriver" ]; then
+    set -- "-Dchrome.driver=$HOME/.cache/diplom-drivers/chromedriver" "$@"
+fi
+exec mvn -B -ntp clean test allure:report -DargLine=-Xmx384m "$@"
